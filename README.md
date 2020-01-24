@@ -6,3 +6,5 @@ Mechanics Home page
 !['Users Home page'](https://i.imgur.com/e3av0hy.png)
 Users home page showcasing themselves with their currently listed issues
 <br>
+!['Routes']('https://i.imgur.com/Nn0uRCr.png')
+<br>
