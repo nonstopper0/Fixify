@@ -20,4 +20,4 @@ Models
 <br>
 User stories
 <br>
-Users: Users will register by entering their: Username, Password, Email. Once user is registered they will be directed to their person page where they can create an issue request and add cars to their garage in need of repair
+Users: Users will register by entering their: Username, Password, Email, and Location. Once user is registered they will be directed to their personal page where they can add vehicles to their garage allowing the ability to make a repair request.
