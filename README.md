@@ -20,4 +20,6 @@ Models
 <br>
 User stories
 <br>
-Users: Users will register by entering their: Username, Password, Email, and Location. Once user is registered they will be directed to their personal page where they can add vehicles to their garage allowing the ability to make a repair request.
+Users: Users will register by entering their: Username, Password, Email, and Location. Once user is registered they will be directed to their personal page where they can add vehicles to their garage allowing the ability to make a repair request. They can also update their repair request if information changes or delete if neccesary
+
+Mechanics: Will register by entering their: Username, Password, Email, Location. Once Mechanic is registered they are taken to their own page where they can specify their specialities. They can then head to the home (index) page where they are able to look at problems within their area and claim them if they fit their specialities.
