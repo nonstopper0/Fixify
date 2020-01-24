@@ -1,3 +1,3 @@
 # Fixify
 
-(https://imgur.com/a/EHYxg1q)
+!['Mechanic Home page'](https://i.imgur.com/wYkkFhm.png)
