@@ -80,7 +80,7 @@ class LogRegister extends React.Component {
     }
     render(){
         return(
-            <div style={{'text-align': "center", "margin":"20px"}}>
+            <div style={{'textAlign': "center", "margin":"20px"}}>
                 <button onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User, Login here" } </button>
                 <form onSubmit={this.handleSubmit}>
                     { this.state.action === "register" ? <input type="email" value={this.state.email} onChange={this.handleChange} name="email" placeholder="email"></input> : null }
