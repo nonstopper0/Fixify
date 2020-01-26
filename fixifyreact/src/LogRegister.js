@@ -48,7 +48,10 @@ class LogRegister extends React.Component {
         const parsedRegisterResponse = await response.json()  
         if (parsedRegisterResponse.status.code === 200) {
             this.props.history.push('/problems')
-        }     
+            this.props.loginfunc(parsedRegisterResponse)
+        } else {
+            console.log('Register failed', parsedRegisterResponse);
+        }
     }
     login = async (info) => {
         console.log(info)
@@ -63,6 +66,7 @@ class LogRegister extends React.Component {
         const parsedLoginResponse = await response.json()
         if (parsedLoginResponse.staus.code === 200) {
             this.props.history.push('/user')
+            this.props.loginfunc(parsedLoginResponse)
         } else {
             console.log('Login rejected: ', parsedLoginResponse)
         }

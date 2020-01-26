@@ -18,6 +18,18 @@ class App extends React.Component {
       loggedUser: null,
     }
   }
+  loginfunc = (data) => {
+    console.log(data);
+    let isUser = true;
+    if  (data/*.type*/ === "mechanic") {
+      isUser = false;
+    }
+    this.setState({
+      logged: true,
+      loggedUser: data/*.username?*/,
+      user: isUser
+    })
+  }
   render(){
     return (
       <React.Fragment>
@@ -25,8 +37,9 @@ class App extends React.Component {
           {this.state.logged && this.state.user ? <UserHeader user={this.state.user}></UserHeader> : null }
           {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.user}></MechanicHeader> : null }
           <Switch> 
-            <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} />}></Route>
+            <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc}/>}></Route>
             <Route exact path="/problems"></Route>
+            <Route exact path="/user/:userid" render={(props => <ShowUser {...props} info={this.state.loggedUser}></ShowUser>)}></Route>
           </Switch>
       </React.Fragment>
     )
