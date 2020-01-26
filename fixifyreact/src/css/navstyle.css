@@ -1,0 +1,12 @@
+nav {
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(61, 61, 61);
+    height: 40px;
+}
+a {
+    font-size: 17px;
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+}
