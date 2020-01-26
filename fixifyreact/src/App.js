@@ -1,5 +1,4 @@
 import React from 'react';
-import './css/App.css';
 import {Route, Switch} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
@@ -34,8 +33,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
           {/* if user is logged in, show the userheader, if the mechanic is logged in, show the mechanic header */}
-          {this.state.logged && this.state.user ? <UserHeader user={this.state.user}></UserHeader> : null }
-          {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.user}></MechanicHeader> : null }
+          {this.state.logged && this.state.user ? <UserHeader user={this.state.loggedUser}></UserHeader> : null }
+          {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.loggedUser}></MechanicHeader> : null }
           <Switch> 
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc}/>}></Route>
             <Route exact path="/problems"></Route>
