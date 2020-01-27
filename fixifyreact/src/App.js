@@ -15,6 +15,7 @@ class App extends React.Component {
       logged: false,
       // logged user username
       loggedUser: null,
+      loggedUserID: null
     }
   }
   loginfunc = (data) => {
@@ -27,6 +28,12 @@ class App extends React.Component {
       user: isUser
     })
   }
+  idfunc = (id) => {
+    this.setState({
+      loggedUserID: id
+    })
+    console.log(this.state.loggedUserID)
+  }
   render(){
     return (
       <React.Fragment>
@@ -34,7 +41,7 @@ class App extends React.Component {
           {this.state.logged && this.state.user ? <UserHeader user={this.state.loggedUser}></UserHeader> : null }
           {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.loggedUser}></MechanicHeader> : null }
           <Switch> 
-            <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc}/>}></Route>
+            <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
             <Route exact path="/problems"></Route>
             <Route exact path="/user/:userid" render={(props => <ShowUser {...props} info={this.state.loggedUser}></ShowUser>)}></Route>
           </Switch>
