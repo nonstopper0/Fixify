@@ -11,7 +11,8 @@ class LogRegister extends React.Component {
             location: '',
             type: '',
             /* what action the user wants to perform */
-            action: 'login'
+            action: 'login',
+            message: ''
         }
     }
     handleChange = (e) => {
@@ -22,25 +23,23 @@ class LogRegister extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
         if (this.state.action === 'login') {
-            console.log('loggin in')
             this.login({
-                username: this.state.username,
-                password: this.state.password
+                username: this.state.username.toLowerCase(),
+                password: this.state.password,
+                type: this.state.type.toLowerCase()
             })
         } else if (this.state.action === "register") {
-            console.log('registering');
             this.register({
-                username: this.state.username,
+                username: this.state.username.toLowerCase(),
                 password: this.state.password,
-                email: this.state.email,
+                email: this.state.email.toLowerCase(),
                 location: this.state.location,
-                type: this.state.type
+                type: this.state.type.toLowerCase()
             })
         }
     }
     register = async (info) => {
-        console.log(info)
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+        const response = await fetch(`http://localhost:8000/register`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(info),
@@ -48,17 +47,20 @@ class LogRegister extends React.Component {
                 'Content-Type': 'application/json'
             }
         }) 
-        const parsedRegisterResponse = await response.json()  
+        const parsedRegisterResponse = await response.json() 
         if (parsedRegisterResponse.status.code === 200) {
+            if (this.state.type.toLowerCase() === "mechanic") {
             this.props.history.push('/problems')
-            this.props.loginfunc(parsedRegisterResponse)
+            }
+            this.props.loginfunc(info)
         } else {
-            console.log('Register failed', parsedRegisterResponse);
+            this.setState({
+                message: "This username or email has been taken"
+            })
         }
     }
     login = async (info) => {
-        console.log(info)
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+        const response = await fetch(`http://localhost:8000/login`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(info),
@@ -67,21 +69,25 @@ class LogRegister extends React.Component {
             }
         })
         const parsedLoginResponse = await response.json()
-        if (parsedLoginResponse.staus.code === 200) {
+        if (parsedLoginResponse.status.code === 200) {
             this.props.history.push('/user')
-            this.props.loginfunc(parsedLoginResponse)
+            this.props.loginfunc(info)
         } else {
-            console.log('Login rejected: ', parsedLoginResponse)
+            this.setState({
+                message: "Sorry this username or password is incorrect"
+            })
         }
     }
     changeAction = (e) => {
         if (this.state.action === "login") {
             this.setState({
-                action: "register"
+                action: "register",
+                message: ''
             })
         } else {
             this.setState({
-                action: "login"
+                action: "login",
+                message: ''
             })
         }
     }
@@ -91,6 +97,9 @@ class LogRegister extends React.Component {
                 <Grid.Column style={{ maxWidth: 400, margin: 40}}>
                     <Header as="h2" textAlign="center">
                         Login
+                    </Header>
+                    <Header>
+                        {this.state.message}
                     </Header>
                     <Button 
                         fluid size="large" 
@@ -139,6 +148,15 @@ class LogRegister extends React.Component {
                             name="location"
                             />
                             : null }
+                            <Form.Input 
+                            fluid
+                            icon="wrench"
+                            iconPosition="left"
+                            placeholder="mechanic or user"
+                            value={this.state.type}
+                            onChange={this.handleChange}
+                            name="type"
+                            />
                         <Button onClick={this.handleSubmit} color="green" fluid size="large">
                             {this.state.action === "login" ? "Login" : "Register"}
                         </Button>

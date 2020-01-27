@@ -20,12 +20,10 @@ class App extends React.Component {
   loginfunc = (data) => {
     console.log(data);
     let isUser = true;
-    if  (data/*.type*/ === "mechanic") {
-      isUser = false;
-    }
+    data['type'].toLowerCase() === "mechanic" ? isUser = false : isUser = true;
     this.setState({
       logged: true,
-      loggedUser: data/*.username?*/,
+      loggedUser: data.username,
       user: isUser
     })
   }
