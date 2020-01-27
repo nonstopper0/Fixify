@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Message, Segment, } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Dropdown} from 'semantic-ui-react'
 
 class LogRegister extends React.Component {
     constructor() {
@@ -9,6 +9,7 @@ class LogRegister extends React.Component {
             password: '',
             email: '',
             location: '',
+            type: '',
             /* what action the user wants to perform */
             action: 'login'
         }
@@ -32,7 +33,8 @@ class LogRegister extends React.Component {
                 username: this.state.username,
                 password: this.state.password,
                 email: this.state.email,
-                location: this.state.location
+                location: this.state.location,
+                type: this.state.type
             })
         }
     }
@@ -85,14 +87,12 @@ class LogRegister extends React.Component {
     }
     render(){
         return(
-            <React.Fragment>
-            <Grid centered columns={2}>
-                <Grid.Column>
+            <Grid textAlign="center" verticalAlign="middle">
+                <Grid.Column style={{ maxWidth: 400, margin: 40}}>
                     <Header as="h2" textAlign="center">
                         Login
                     </Header>
                     <Button 
-                        color="grey" 
                         fluid size="large" 
                         onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User, Login here" } 
                     </Button>
@@ -133,7 +133,7 @@ class LogRegister extends React.Component {
                             fluid
                             icon="location arrow"
                             iconPosition="left"
-                            placeholder="location"
+                            placeholder="City, State"
                             value={this.state.location}
                             onChange={this.handleChange}
                             name="location"
@@ -147,7 +147,6 @@ class LogRegister extends React.Component {
                     </Segment>
                 </Grid.Column>
             </Grid>
-            </React.Fragment>
         )
     }
 }

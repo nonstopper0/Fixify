@@ -10,9 +10,9 @@ class App extends React.Component {
     super()
     this.state={
       // user or mechanic? if this is true it is a user
-      user: false,
+      user: true,
       // keep track if user is logged
-      logged: true,
+      logged: false,
       // logged user username
       loggedUser: null,
     }
