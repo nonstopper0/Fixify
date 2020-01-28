@@ -109,7 +109,7 @@ class LogRegister extends React.Component {
                     </Header>
                     <Button 
                         fluid size="large" 
-                        onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User, Login here" } 
+                        onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User? Login here" } 
                     </Button>
                     <Segment>
                         <Form size="large" onSubmit={this.handleSubmit} required>
@@ -177,7 +177,6 @@ class LogRegister extends React.Component {
                         null 
                         }
                         </Form>
-
                     </Segment>
                 </Grid.Column>
             </Grid>

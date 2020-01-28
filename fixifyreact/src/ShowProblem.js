@@ -1,13 +1,15 @@
 import React from 'react';
 import {Grid, Row} from 'semantic-ui-react'
 
-class ShowUser extends React.Component {
+class ShowProblem extends React.Component {
     constructor() {
         super()
         this.state = {
-            username: '',
-            email: '', 
-            location: '' 
+            car: '', 
+            price: '', 
+            description: '', 
+            location: '', 
+            owner: ''
         }
     }
 
@@ -29,10 +31,15 @@ render() {
                             </Grid.Row> */}
                         <Grid.Row>
                             <Grid.Column>
-                                    <h2>{this.state.username}</h2>
-                                    <h4>{this.state.email}</h4>
-                                    <h4>{this.state.location}</h4>
+                                <h2>{this.state.car}</h2>
+                                <h4>{this.state.price}</h4>
+                                <h4>{this.state.description}</h4>
+                                <h4>{this.state.location}</h4>
+                                <h4>{this.state.owner}</h4>
                             </Grid.Column>
+                            {/* <Grid.Row>
+                                <Button onClick={this.editProblem}>Edit Problem</Button>
+                            </Grid.Row>  */}
                         </Grid.Row>
                         </Grid>
                         <Grid 
@@ -49,4 +56,4 @@ render() {
     )
 }}
 
-export default ShowUser;
+export default ShowProblem;
