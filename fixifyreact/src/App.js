@@ -15,7 +15,7 @@ class App extends React.Component {
       logged: false,
       // logged user username
       loggedUser: null,
-      loggedUserID: null
+      loggedUserID: 0
     }
   }
   loginfunc = (data) => {
@@ -38,8 +38,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
           {/* if user is logged in, show the userheader, if the mechanic is logged in, show the mechanic header */}
-          {this.state.logged && this.state.user ? <UserHeader user={this.state.loggedUser}></UserHeader> : null }
-          {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.loggedUser}></MechanicHeader> : null }
+          {this.state.logged && this.state.user ? <UserHeader user={this.state.loggedUser} id={this.state.loggedUserID}></UserHeader> : null }
+          {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.loggedUser} id={this.state.loggedUserID}></MechanicHeader> : null }
           <Switch> 
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
             <Route exact path="/problems"></Route>
