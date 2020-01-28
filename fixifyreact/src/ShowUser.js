@@ -1,4 +1,5 @@
 import React from 'react';
+import {Grid, Row} from 'semantic-ui-react';
 
 class ShowUser extends React.Component {
     constructor() {
