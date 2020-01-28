@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import navstyle from './css/navstyle.css';
 import { Menu, Container, Header, Icon} from 'semantic-ui-react'
 
-function MechanicHeader() {
-    const IdOfMechanic = `/mechanic/${'test'}` /*this.props.user.id*/
+function MechanicHeader(props) {
+    const id = props.id
+    const IdOfMechanic = `/mechanic/${id}` /*this.props.user.id*/
     return (
         <Header>
         <Menu fixed='top' inverted>
