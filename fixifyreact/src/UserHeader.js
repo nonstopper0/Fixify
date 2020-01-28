@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Menu, Icon} from 'semantic-ui-react'
 
-function UserHeader() {
-    const IdOfUser = `/user/${'test'}` /*this.props.user.id*/
+function UserHeader(props) {
+    const id = props.id
+    const IdOfUser = `/user/${id}` /*this.props.user.id*/
     return (
         <Header>
         <Menu fixed='top' inverted>
