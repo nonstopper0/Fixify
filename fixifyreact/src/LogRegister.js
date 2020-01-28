@@ -9,7 +9,7 @@ class LogRegister extends React.Component {
             password: '',
             email: '',
             location: '',
-            type: '',
+            type: 'mechanic',
             /* what action the user wants to perform */
             action: 'login',
             message: ''
@@ -51,8 +51,6 @@ class LogRegister extends React.Component {
         if (parsedRegisterResponse.status.code === 200) {
             if (this.state.type.toLowerCase() === "mechanic") {
                 this.props.history.push('/problems')
-            } else if (this.state.type.toLowerCase() === "user") {
-                this.props.history.push('/user')
             }
             this.props.loginfunc({id: parsedRegisterResponse.status.id, type: info.type})
         } else {
@@ -74,8 +72,6 @@ class LogRegister extends React.Component {
         if (parsedLoginResponse.status.code === 200) {
             if (this.state.type.toLowerCase() === "mechanic") {
                 this.props.history.push('/problems')
-            } else if (this.state.type.toLowerCase() === "user") {
-                this.props.history.push('/user')
             }
             this.props.loginfunc({id: parsedLoginResponse.status.id, type: info.type})
         } else {
@@ -97,12 +93,23 @@ class LogRegister extends React.Component {
             })
         }
     }
+    handleType = (e) => {
+        if (this.state.type === "user") {
+            this.setState({
+                type: "mechanic"
+            })
+        } else {
+            this.setState({
+                type: "user"
+            })
+        }
+    }
     render(){
         return(
             <Grid textAlign="center" verticalAlign="middle">
                 <Grid.Column style={{ maxWidth: 400, margin: 40}}>
-                    <Header as="h2" textAlign="center">
-                        Login
+                    <Header as="h1" textAlign="center">
+                        <span style={{"color": "green"}}>Fixify</span> {this.state.action ==="login" ? "Login" : "Register" }
                     </Header>
                     <Header>
                         {this.state.message}
@@ -112,6 +119,9 @@ class LogRegister extends React.Component {
                         onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User? Login here" } 
                     </Button>
                     <Segment>
+                        <Button onClick={this.handleType} style={{'margin': "10px"}} color="green" >
+                            {this.state.type === "user" ? "User Account" : "Mechanic Account"}
+                        </Button>
                         <Form size="large" onSubmit={this.handleSubmit} required>
                         { this.state.action === "register" ? 
                             <Form.Input 
@@ -127,7 +137,7 @@ class LogRegister extends React.Component {
                             : null }
                             <Form.Input    
                                 fluid
-                                icon="user"
+                                icon={this.state.type==="user" ? "user" : "wrench"}
                                 iconPosition='left'
                                 placeholder='username'
                                 value={this.state.username}
@@ -157,24 +167,14 @@ class LogRegister extends React.Component {
                             onChange={this.handleChange}
                             name="location"
                             />
-                            : null }
-                            <Form.Input 
-                            fluid
-                            icon="wrench"
-                            iconPosition="left"
-                            placeholder="mechanic or user"
-                            value={this.state.type}
-                            onChange={this.handleChange}
-                            name="type"
-                            required
-                            />
+                        : null }
                         {/* Check if minimum fields have been info */}
-                        { this.state.action == "login" && this.state.username && this.state.password && this.state.type || this.state.action == "register" && this.state.username && this.state.password && this.state.type && this.state.location ?
+                        { this.state.action === "login" && this.state.username && this.state.password || this.state.action === "register" && this.state.username && this.state.password && this.state.location ?
                         <Button onClick={this.handleSubmit} color="green" fluid size="large">
                             {this.state.action === "login" ? "Login" : "Register"}
                         </Button>
                         :
-                        null 
+                        null
                         }
                         </Form>
                     </Segment>
