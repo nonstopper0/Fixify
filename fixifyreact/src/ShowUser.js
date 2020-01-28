@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Row, Header, List, Segment} from 'semantic-ui-react';
 
+
 class ShowUser extends React.Component {
     constructor() {
         super()
@@ -59,5 +60,4 @@ class ShowUser extends React.Component {
         )
     }
 }
-
 export default ShowUser;

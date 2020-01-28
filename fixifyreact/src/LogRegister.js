@@ -116,7 +116,7 @@ class LogRegister extends React.Component {
                     </Header>
                     <Button 
                         fluid size="large" 
-                        onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User, Login here" } 
+                        onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User? Login here" } 
                     </Button>
                     <Segment>
                         <Button onClick={this.handleType} style={{'margin': "10px"}} color="green" >
