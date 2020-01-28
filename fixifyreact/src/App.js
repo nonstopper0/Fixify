@@ -1,11 +1,12 @@
 import React from 'react';
-import {Route, Switch, withRouter} from 'react-router-dom';
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
 import ShowUser from './ShowUser.js'
 import ShowProblem from './ShowProblem.js'
 import MechanicHeader from './MechanicHeader.js';
 
+let loginRedirect = ""
 class App extends React.Component {
   constructor() {
     super()
@@ -31,7 +32,7 @@ class App extends React.Component {
         user: isUser,
         loggedID: userid
     })
-    console.log(this.state)
+    this.props.history.push(`/user/${userid}`)
   } 
 
   logoutFunc = async() => {
@@ -44,7 +45,7 @@ class App extends React.Component {
     })
     const parsedLogoutResponse = await response.json() 
     console.log(parsedLogoutResponse)
-    if (parsedLogoutResponse.status.code == 200) {
+    if (parsedLogoutResponse.status.code === 200) {
       this.setState({
         logged: false,
         loggedID: 0,
@@ -52,7 +53,6 @@ class App extends React.Component {
     }
     this.props.history.push('/')
   }
-
   render(){
     return (
       <React.Fragment>
@@ -62,7 +62,7 @@ class App extends React.Component {
           <Switch> 
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
             <Route exact path="/problems"></Route>
-            <Route exact path="/user/:userid" render={(props => <ShowUser {...props} id={this.state.loggedID}></ShowUser>)}></Route>
+            <Route exact path="/user/:id" render={(props => <ShowUser {...props} loggedIn={this.state.logged} id={this.state.loggedID}></ShowUser>)}></Route>
           </Switch>
       </React.Fragment>
     )
