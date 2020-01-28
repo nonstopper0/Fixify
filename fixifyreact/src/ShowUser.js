@@ -5,7 +5,8 @@ class ShowUser extends React.Component {
         super()
         this.state = {
             username: '',
-            email: ''
+            email: '', 
+            // location: ''
         }
     }
     render() {
@@ -14,5 +15,8 @@ class ShowUser extends React.Component {
         )
     }
 }
+
+// All of users info
+// List of their problems 
 
 export default ShowUser;
