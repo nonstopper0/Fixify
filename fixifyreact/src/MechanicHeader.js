@@ -18,7 +18,7 @@ function MechanicHeader(props) {
                     <Link to={IdOfMechanic}>Profile</Link>
                 </Menu.Item>
                 <div onClick={props.logout}>
-                <Menu.Item onClick={props.logout}>
+                <Menu.Item>
                     <Icon name='dont' size='large'/>
                     <Link to='/logout'>Logout</Link>
                 </Menu.Item>

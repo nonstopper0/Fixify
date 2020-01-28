@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
 import ShowUser from './ShowUser.js'
@@ -17,19 +17,23 @@ class App extends React.Component {
       loggedID: 0,
     }
   }
-  loginfunc = async(id) => {
+  loginfunc = async(data) => {
+      console.log(data)
       let isUser = true;
+      if (data['type'] === "mechanic") {
+          isUser = false
+      }
+      let userid = data['id']
       this.setState({
         logged: true,
         // loggedUsername: n,
         user: isUser,
-        loggedID: id
+        loggedID: userid
     })
     console.log(this.state)
   } 
 
   logoutFunc = async() => {
-    console.log('logout')
     const response = await fetch(`http://localhost:8000/logout`, {
       method: 'GET',
       credentials: 'include',
@@ -44,7 +48,9 @@ class App extends React.Component {
         logged: false,
         loggedID: 0,
       })
-    }}
+    }
+    this.props.history.push('/')
+  }
 
   render(){
     return (
@@ -62,4 +68,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

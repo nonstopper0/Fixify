@@ -54,7 +54,7 @@ class LogRegister extends React.Component {
             } else if (this.state.type.toLowerCase() === "user") {
                 this.props.history.push('/user')
             }
-            this.props.loginfunc(parsedRegisterResponse.status.id)
+            this.props.loginfunc({id: parsedRegisterResponse.status.id, type: info.type})
         } else {
             this.setState({
                 message: "This username or email has been taken"
@@ -77,7 +77,7 @@ class LogRegister extends React.Component {
             } else if (this.state.type.toLowerCase() === "user") {
                 this.props.history.push('/user')
             }
-            this.props.loginfunc(parsedLoginResponse.status.id)
+            this.props.loginfunc({id: parsedLoginResponse.status.id, type: info.type})
         } else {
             this.setState({
                 message: "Sorry this username or password is incorrect"
@@ -112,10 +112,11 @@ class LogRegister extends React.Component {
                         onClick={this.changeAction}> {this.state.action === "login" ? "Not a user? Register here" : "Already a User, Login here" } 
                     </Button>
                     <Segment>
-                        <Form size="large" onSubmit={this.handleSubmit}>
+                        <Form size="large" onSubmit={this.handleSubmit} required>
                         { this.state.action === "register" ? 
                             <Form.Input 
                             fluid
+                            required
                             icon="mail"
                             iconPosition="left"
                             placeholder="email"
@@ -132,6 +133,7 @@ class LogRegister extends React.Component {
                                 value={this.state.username}
                                 onChange={this.handleChange}
                                 name="username"
+                                required
                             />
                             <Form.Input 
                                 fluid
@@ -142,9 +144,11 @@ class LogRegister extends React.Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 name="password"
+                                required
                             />
                         { this.state.action === "register" ? 
                             <Form.Input 
+                            required
                             fluid
                             icon="location arrow"
                             iconPosition="left"
@@ -162,10 +166,16 @@ class LogRegister extends React.Component {
                             value={this.state.type}
                             onChange={this.handleChange}
                             name="type"
+                            required
                             />
+                        {/* Check if minimum fields have been info */}
+                        { this.state.action == "login" && this.state.username && this.state.password && this.state.type || this.state.action == "register" && this.state.username && this.state.password && this.state.type && this.state.location ?
                         <Button onClick={this.handleSubmit} color="green" fluid size="large">
                             {this.state.action === "login" ? "Login" : "Register"}
                         </Button>
+                        :
+                        null 
+                        }
                         </Form>
 
                     </Segment>
