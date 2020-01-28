@@ -12,10 +12,12 @@ function UserHeader(props) {
                     <Icon name='user' size='large' />
                     <Link to={IdOfUser}>Home</Link>
                 </Menu.Item>
-                <Menu.Item positon="right">
+                <div onClick={props.logout}>
+                <Menu.Item >
                     <Icon name='dont' size='large'/>
                     <Link to='/logout'>Logout</Link>
                 </Menu.Item>
+                </div>
         </Menu>
     </Header>
     )
