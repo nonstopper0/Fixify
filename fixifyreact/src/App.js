@@ -3,6 +3,7 @@ import {Route, Switch, withRouter} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
 import ShowUser from './ShowUser.js'
+import ShowProblem from './ShowProblem.js'
 import MechanicHeader from './MechanicHeader.js';
 
 class App extends React.Component {
@@ -61,7 +62,7 @@ class App extends React.Component {
           <Switch> 
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
             <Route exact path="/problems"></Route>
-            <Route exact path="/user/:userid" render={(props => <ShowUser {...props} info={this.state.loggedUser}></ShowUser>)}></Route>
+            <Route exact path="/user/:userid" render={(props => <ShowUser {...props} id={this.state.loggedID}></ShowUser>)}></Route>
           </Switch>
       </React.Fragment>
     )
