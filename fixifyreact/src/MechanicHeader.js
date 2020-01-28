@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import navstyle from './css/navstyle.css';
-import { Menu, Container, Header, Icon} from 'semantic-ui-react'
+import { Menu, Header, Icon} from 'semantic-ui-react'
 
 function MechanicHeader(props) {
     const id = props.id
