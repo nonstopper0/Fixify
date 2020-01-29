@@ -76,7 +76,7 @@ class ShowUser extends React.Component {
         })
         const parsedProblemResponse = await response.json()
         if (parsedProblemResponse.status.code === 200) {
-            console.log("creation of problem succesful: ", parsedProblemResponse)
+            console.log("creation of problem successful: ", parsedProblemResponse)
         } else {
             console.log("creation of problem failed: ", parsedProblemResponse)
         }      
