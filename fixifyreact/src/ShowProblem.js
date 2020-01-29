@@ -44,6 +44,7 @@ class ShowProblem extends React.Component {
         }}
     }
       render() {
+          return (
         <div>
             <div>
                 <Grid
@@ -76,6 +77,7 @@ class ShowProblem extends React.Component {
                 />  
             </div>     
         </div>
-    }} 
+    )}
+}
 
 export default ShowProblem;
