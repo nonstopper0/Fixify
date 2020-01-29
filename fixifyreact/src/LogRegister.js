@@ -29,12 +29,21 @@ class LogRegister extends React.Component {
                 type: this.state.type.toLowerCase()
             })
         } else if (this.state.action === "register") {
-            this.register({
+            this.state.type === "user" ? this.register({
                 username: this.state.username.toLowerCase(),
                 password: this.state.password,
                 email: this.state.email.toLowerCase(),
                 location: this.state.location,
                 type: this.state.type.toLowerCase()
+            })
+            :
+            this.register({
+                username: this.state.username.toLowerCase(),
+                password: this.state.password,
+                email: this.state.email.toLowerCase(),
+                location: this.state.location,
+                type: this.state.type.toLowerCase(),
+                specialities: ""               
             })
         }
     }
