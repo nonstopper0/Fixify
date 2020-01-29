@@ -53,7 +53,7 @@ class ShowUser extends React.Component {
             [e.target.name]: e.target.value
         })
     }
-    handleSubmit = async(e) => {
+    handleProblemSubmit = async(e) => {
         this.setState({
             loading: true,
         })
@@ -84,7 +84,34 @@ class ShowUser extends React.Component {
             loading: false,
         })
     }
+    handleEditSubmit = async(e) => {
+        this.setState({
+            loading: true
+        })
+        const info = { location: this.state.location }
+        const id = this.props.id 
+        const response = await fetch(`http://localhost:8000/user/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(info),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const parsedEditResponse = await response.json()
+        if (parsedEditResponse.status.code === 200) {
+            console.log('Edited user succesfully: ', parsedEditResponse);
+        } else {
+            console.log('Edit of user failed: ', parsedEditResponse);
+        }
+        this.setState({
+            loading: false
+        })
+    }
     render() {
+        const buttonStyle = {
+            "margin-top": "18px"
+        }
         return (
             <div>
                 {!this.state.loading ? 
@@ -96,11 +123,12 @@ class ShowUser extends React.Component {
                                         <List.Item icon="mail" as="h2" content={this.state.email}/>
                                         <List.Item icon="map marker alternate" as="h2" content={this.state.location}/>
                                 </List>
+
                             {this.props.loggedIn ?
-                            <Modal trigger={<Button color="green" fluid style={{"margin-top":"30px"}}>Create Problem</Button>}>
+                            <Modal trigger={<Button color="green" fluid style={buttonStyle}>Create Problem</Button>}>
                                 <Segment>
                                     <Header as="h1">Create a <span style={{"color":"green"}}>Problem</span></Header>
-                                    <Form size="large" onSubmit={this.handleSubmit} required>
+                                    <Form size="large" onSubmit={this.handleProblemSubmit} required>
                                     <Form.Input 
                                     label="Problem"
                                     icon="wrench"
@@ -138,17 +166,8 @@ class ShowUser extends React.Component {
                                     onChange={this.handleChange}
                                     name="price"
                                     /> 
-                                    <Form.Input
-                                    label="Location"
-                                    icon="map marker alternate"
-                                    iconPosition="left"
-                                    placeholder={this.state.location}
-                                    value={this.state.location}
-                                    onChange={this.handleChange}
-                                    name="location"
-                                    /> 
                                     { this.state.car && this.state.title && this.state.description && this.state.price && this.state.location  ? 
-                                    <Button onClick={this.handleSubmit} color="green" fluid size="large">
+                                    <Button color="green" fluid size="large">
                                         Create
                                     </Button>
                                     :
@@ -158,6 +177,32 @@ class ShowUser extends React.Component {
                                 </Segment>
                             </Modal>
                             : null }
+
+                            {this.props.loggedIn ? 
+                            <Modal trigger={<Button color="grey" fluid style={buttonStyle}>Edit Profile</Button>}>
+                                <Segment>
+                                    <Header as="h1">Edit Profile</Header>
+                                    <Form size="large" onSubmit={this.handleEditSubmit} required>
+                                        <Form.Input 
+                                        label="location"
+                                        icon="map marker alternate"
+                                        iconPosition="left"
+                                        placeholder={this.state.location}
+                                        value={this.state.location}
+                                        onChange={this.handleChange}
+                                        name="location"
+                                        />
+                                    {this.state.location ? 
+                                    <Button color="green" fluid size="large">
+                                        Edit Profile
+                                    </Button> 
+                                    : null }
+                                    </Form>
+                                </Segment>
+                            </Modal>
+                            :
+                            null}
+
                         </Segment>
                     </Grid>  
             :
