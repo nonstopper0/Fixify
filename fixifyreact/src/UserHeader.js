@@ -21,10 +21,6 @@ function UserHeader(props) {
                 </div>
                 </Menu.Menu>
         </Menu>
-<<<<<<< HEAD
-        </Header>
-=======
->>>>>>> 7d0f66c37232f5d2f5ae12a296da9e56e188ea53
     )
 }
 
