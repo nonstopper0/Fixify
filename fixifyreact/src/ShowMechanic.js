@@ -1,9 +1,9 @@
 import React from 'react';
-import {Grid, Row, Header, List, Segment, Message, Icon} from 'semantic-ui-react';
-import LoadingScreen from './LoadingScreen';
+import {Grid, Row, Header, List, Segment} from 'semantic-ui-react';
+import LoadingScreen from './LoadingScreen'
 
 
-class ShowUser extends React.Component {
+class ShowMechanic extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -13,10 +13,10 @@ class ShowUser extends React.Component {
             loading: true,
         }
     }
-    getUserData = async(e) => {
+    getMechanicData = async(e) => {
         const url = await window.location.href.toString()
-        const id = await url.match(/(?<=user\/).*$/)
-        const response = await fetch(`http://localhost:8000/user/${id}`, {
+        const id = await url.match(/(?<=mechanic\/).*$/)
+        const response = await fetch(`http://localhost:8000/mechanic/${id}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -40,7 +40,7 @@ class ShowUser extends React.Component {
         }, 500)
     }
     componentDidMount = (e) => {
-        this.getUserData()
+        this.getMechanicData();
     }
     render() {
         return (
@@ -53,9 +53,9 @@ class ShowUser extends React.Component {
                     stackable
                     >
                         <Segment>
-                                <Header as="h1"><span style={{"color":"green"}}>Fixify</span> User profile</Header>
+                                <Header as="h1"><span style={{"color":"green"}}>Fixify</span> Mechanic profile</Header>
                                 <List>
-                                        <List.Item icon="user" as="h2" content={this.state.username} />
+                                        <List.Item icon="wrench" as="h2" content={this.state.username} />
                                         <List.Item icon="mail" as="h2" content={this.state.email}/>
                                         <List.Item icon="map marker alternate" as="h2" content={this.state.location}/>
                                 </List>
@@ -68,4 +68,4 @@ class ShowUser extends React.Component {
         )
     }
 }
-export default ShowUser;
+export default ShowMechanic;

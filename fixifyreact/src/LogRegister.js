@@ -49,11 +49,8 @@ class LogRegister extends React.Component {
         }) 
         const parsedRegisterResponse = await response.json() 
         if (parsedRegisterResponse.status.code === 200) {
-            if (this.state.type.toLowerCase() === "mechanic") {
-                this.props.history.push('/problems')
-            }
             this.props.loginfunc({id: parsedRegisterResponse.status.id, type: info.type})
-        } else {
+        } else if (parsedRegisterResponse.status.code === 400){
             this.setState({
                 message: "This username or email has been taken"
             })
@@ -70,9 +67,6 @@ class LogRegister extends React.Component {
         })
         const parsedLoginResponse = await response.json()
         if (parsedLoginResponse.status.code === 200) {
-            if (this.state.type.toLowerCase() === "mechanic") {
-                this.props.history.push('/problems')
-            }
             this.props.loginfunc({id: parsedLoginResponse.status.id, type: info.type})
         } else {
             this.setState({

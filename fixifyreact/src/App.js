@@ -5,8 +5,8 @@ import LogRegister from './LogRegister.js'
 import ShowUser from './ShowUser.js'
 import ShowProblem from './ShowProblem.js'
 import MechanicHeader from './MechanicHeader.js';
+import ShowMechanic from './ShowMechanic.js';
 
-let loginRedirect = ""
 class App extends React.Component {
   constructor() {
     super()
@@ -20,19 +20,21 @@ class App extends React.Component {
     }
   }
   loginfunc = async(data) => {
-      console.log(data)
+      console.log('loginfunc data: ', data)
       let isUser = true;
+      let id = data['id']
       if (data['type'] === "mechanic") {
           isUser = false
+          this.props.history.push(`/mechanic/${id}`)
+      } else if (data['type'] === "user") {
+        this.props.history.push(`/user/${id}`)
       }
-      let userid = data['id']
       this.setState({
         logged: true,
         // loggedUsername: n,
         user: isUser,
-        loggedID: userid
+        loggedID: id
     })
-    this.props.history.push(`/user/${userid}`)
   } 
 
   logoutFunc = async() => {
@@ -63,6 +65,7 @@ class App extends React.Component {
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
             <Route exact path="/problems"></Route>
             <Route exact path="/user/:id" render={(props => <ShowUser {...props} loggedIn={this.state.logged} id={this.state.loggedID}></ShowUser>)}></Route>
+            <Route exact path="/mechanic/:id" render={(props => <ShowMechanic {...props} loggedIn={this.state.logged} id={this.state.loggedID}></ShowMechanic>)}></Route>
           </Switch>
       </React.Fragment>
     )
