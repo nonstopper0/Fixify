@@ -48,7 +48,7 @@ class LogRegister extends React.Component {
         }
     }
     register = async (info) => {
-        const response = await fetch(`http://localhost:8000/register`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(info),
@@ -66,7 +66,7 @@ class LogRegister extends React.Component {
         }
     }
     login = async (info) => {
-        const response = await fetch(`http://localhost:8000/login`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(info),

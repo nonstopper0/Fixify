@@ -17,7 +17,7 @@ class ShowMechanic extends React.Component {
     getMechanicData = async(e) => {
         const url = await window.location.href.toString()
         const id = await url.match(/(?<=mechanic\/).*$/)
-        const response = await fetch(`http://localhost:8000/mechanic/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/mechanic/${id}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -47,7 +47,7 @@ class ShowMechanic extends React.Component {
         })
         const info = { location: this.state.location, specialities: this.state.specialities }
         const id = this.props.id 
-        const response = await fetch(`http://localhost:8000/mechanic/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/mechanic/${id}`, {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(info),
