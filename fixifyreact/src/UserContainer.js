@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Row, Header, List, Segment, Form, Icon, Modal, Button, TextArea} from 'semantic-ui-react';
+import {Grid, Row, Header, List, Segment, Form, Icon, Modal, Button, TextArea, Text} from 'semantic-ui-react';
 import LoadingScreen from './LoadingScreen';
 
 
@@ -12,6 +12,7 @@ class ShowUser extends React.Component {
             email: '', 
             location: '',
             loading: true,
+            problems: [],
             // problem data below
             title: '',
             car: '',
@@ -30,6 +31,7 @@ class ShowUser extends React.Component {
             }
         })
         const parsedLoginResponse = await response.json()
+        console.log(parsedLoginResponse.data.id)
         if (parsedLoginResponse.status.code === 200) {
             this.setState({
                 username: parsedLoginResponse.data.username,
@@ -45,8 +47,69 @@ class ShowUser extends React.Component {
             })
         }, 500)
     }
-    componentDidMount = (e) => {
-        this.getUserData()
+    getProblems = async(e) => {
+        const response = await fetch(`http://localhost:8000/problem/`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })       
+        const parsedProblems = await response.json()
+        const parsedProblemsData = parsedProblems.data
+        const userProblems = await parsedProblemsData.filter((problem) => {
+            if (problem['owner_username'] === this.state.username) {
+                return problem
+            }
+        })
+        await this.setState({
+            problems: [...userProblems]
+        })
+    }
+    deleteProblem = async(id) => {
+        const response = await fetch(`http://localhost:8000/problem/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })     
+        const parsedResponse = await response.json()
+        if (parsedResponse.status.code === 200) {
+            console.log(parsedResponse)
+        } else {
+            console.log('delete problem failed', parsedResponse)
+        }
+    }
+    updateRender = (e) => {
+        const items = this.state.problems.map((problem) => {
+            return <Segment>
+                <List.Item>
+                    <Header>
+                    {problem.title}
+                    </Header>
+                    <span style={{'color':'green'}}>Vehicle:</span> {problem.car}
+                    <Modal trigger={<Button style={{'position': 'relative', 'float': 'right', 'top': '-25px'}}size="medium" color="green">View</Button>}>
+                        <Segment>
+                            <Header as="h1">{problem.title}</Header>
+                            <Header as="h3">{problem.car}</Header>
+                            <List>
+                                <List.Item as="p"content={problem.description}></List.Item>
+                                <List.Item icon="large map marker alternate" as="h2"content={problem.location}></List.Item>
+                                <List.Item style={{'float': 'right'}} icon="money" as="h1" iconPosition="left"content={problem.price}></List.Item>
+                                <List.Item icon="wrench" as="h1" content={problem.mechanic_username ? problem.mechanic_username : "not claimed yet"}></List.Item>
+                            </List>
+                        </Segment>
+                    </Modal>
+                    
+                </List.Item>
+                </Segment>
+        })
+        return items
+    }
+    componentDidMount = async(e) => {
+        await this.getUserData()
+        await this.getProblems()
     }
     handleChange = (e) => {
         this.setState({
@@ -82,7 +145,12 @@ class ShowUser extends React.Component {
         }      
         this.setState({
             loading: false,
+            car: '',
+            description: '',
+            title: '',
+            price: '',
         })
+        this.getProblems()
     }
     handleEditSubmit = async(e) => {
         this.setState({
@@ -115,8 +183,7 @@ class ShowUser extends React.Component {
         return (
             <div>
                 {!this.state.loading ? 
-                <Grid textAlign='center' style={{ marginTop: '5em', height: '100%'}} verticalAlign='top' stackable>
-                        <Segment>
+                        <Segment style={{'margin': '50px'}}>
                                 <Header as="h1"><span style={{"color":"green"}}>Fixify</span> User profile</Header>
                                 <List>
                                         <List.Item icon="user" as="h2" content={this.state.username} />
@@ -125,7 +192,7 @@ class ShowUser extends React.Component {
                                 </List>
 
                             {this.props.loggedIn ?
-                            <Modal trigger={<Button color="green" fluid style={buttonStyle}>Create Problem</Button>}>
+                            <Modal trigger={<Button color="green"  style={buttonStyle}>Create Problem</Button>}>
                                 <Segment>
                                     <Header as="h1">Create a <span style={{"color":"green"}}>Problem</span></Header>
                                     <Form size="large" onSubmit={this.handleProblemSubmit} required>
@@ -179,7 +246,7 @@ class ShowUser extends React.Component {
                             : null }
 
                             {this.props.loggedIn ? 
-                            <Modal trigger={<Button color="grey" fluid style={buttonStyle}>Edit Profile</Button>}>
+                            <Modal trigger={<Button color="grey" style={buttonStyle}>Edit Profile</Button>}>
                                 <Segment>
                                     <Header as="h1">Edit Profile</Header>
                                     <Form size="large" onSubmit={this.handleEditSubmit} required>
@@ -204,10 +271,15 @@ class ShowUser extends React.Component {
                             null}
 
                         </Segment>
-                    </Grid>  
             :
             <LoadingScreen />
         }
+        <Segment style={{'margin': '50px'}}>
+            <Header as="h1"><span style={{"color":"green"}}>Problems</span></Header>
+            <List>
+            { this.updateRender()}
+            </List>
+        </Segment>
         </div>
         )
     }
