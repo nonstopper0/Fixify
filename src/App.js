@@ -1,10 +1,10 @@
 import React from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import UserHeader from './UserHeader';
-import LogRegister from './LogRegister.js'
-import ShowUser from './UserContainer.js';
-import MechanicHeader from './MechanicHeader.js';
-import ShowMechanic from './ShowMechanic.js';
+import LogRegister from './LogRegister.js.js'
+import ShowUser from './UserContainer.js.js';
+import MechanicHeader from './MechanicHeader.js.js';
+import ShowMechanic from './ShowMechanic.js.js';
 
 class App extends React.Component {
   constructor() {
@@ -37,7 +37,7 @@ class App extends React.Component {
   } 
 
   logoutFunc = async() => {
-    const response = await fetch(`http://localhost:8000/logout`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/logout`, {
       method: 'GET',
       credentials: 'include',
       headers: {

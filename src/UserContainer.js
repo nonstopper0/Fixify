@@ -23,7 +23,7 @@ class ShowUser extends React.Component {
     getUserData = async(e) => {
         const url = await window.location.href.toString()
         const id = await url.match(/(?<=user\/).*$/)
-        const response = await fetch(`http://localhost:8000/user/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -48,7 +48,7 @@ class ShowUser extends React.Component {
         }, 500)
     }
     getProblems = async(e) => {
-        const response = await fetch(`http://localhost:8000/problem/`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/problem/`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -67,7 +67,7 @@ class ShowUser extends React.Component {
         })
     }
     deleteProblem = async(id) => {
-        const response = await fetch(`http://localhost:8000/problem/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/problem/${id}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -129,7 +129,7 @@ class ShowUser extends React.Component {
             owner_username: this.state.username,
             mechanic_username: ''
         }
-        const response = await fetch(`http://localhost:8000/problem/`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/problem/`, {
             method: 'POST',
             credentials: 'include',
             body: JSON.stringify(info),
@@ -158,7 +158,7 @@ class ShowUser extends React.Component {
         })
         const info = { location: this.state.location }
         const id = this.props.id 
-        const response = await fetch(`http://localhost:8000/user/${id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}`, {
             method: 'PUT',
             credentials: 'include',
             body: JSON.stringify(info),
