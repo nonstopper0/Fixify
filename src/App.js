@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
+import ShowProblem from './ShowProblem.js'
 import ShowUser from './UserContainer.js';
 import MechanicHeader from './MechanicHeader.js';
 import ShowMechanic from './ShowMechanic.js';
