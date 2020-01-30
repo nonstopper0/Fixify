@@ -17,8 +17,6 @@ render() {
     const { loggedIn } = this.props
     return (
         <div>
-            { loggedIn
-                    ?
                     <div>
                         <Grid
                             textAlign='center'
@@ -49,9 +47,6 @@ render() {
                             stackable   
                         />  
                     </div>     
-                    :
-                    'You must be logged in to view this page' 
-                    }
         </div>
     )
 }}
