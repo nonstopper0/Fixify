@@ -12,6 +12,7 @@ class ShowMechanic extends React.Component {
             location: '',
             specialities: '',
             loading: true,
+            problems: []
         }
     }
     getMechanicData = async(e) => {
@@ -41,6 +42,57 @@ class ShowMechanic extends React.Component {
             })
         }, 500)
     }
+    getProblems = async(e) => {
+        console.log('get problems')
+        
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/problem/`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })       
+        const parsedProblems = await response.json()
+        console.log('all problems: ', parsedProblems)
+        const parsedProblemsData = parsedProblems.data
+        const userProblems = await parsedProblemsData.filter((problem) => {
+            if (problem['mechanic_username'] === this.state.username) {
+                return problem
+            }
+        })
+        await this.setState({
+            problems: [...userProblems]
+        })
+        console.log(this.state.problems)
+        this.forceUpdate()
+    }
+    updateRender = (e) => {
+        const items = this.state.problems.map((problem) => {
+            return <Segment>
+                <List.Item>
+                    <Header>
+                    {problem.title}
+                    </Header>
+                    <span style={{'color':'green'}}>Vehicle:</span> {problem.car}
+                    <Modal trigger={<Button style={{'position': 'relative', 'float': 'right', 'top': '-25px'}}size="medium" color="green">View</Button>}>
+                        <Segment>
+                            <Header as="h1">{problem.title}</Header>
+                            <Header as="h3">{problem.car}</Header>
+                            <List>
+                                <List.Item as="p"content={problem.description}></List.Item>
+                                <List.Item icon="large map marker alternate" as="h2"content={problem.location}></List.Item>
+                                <List.Item icon="user" as="h1" content={problem.owner_username}></List.Item>
+                                <List.Item style={{'float': 'right'}} icon="money" as="h1" iconPosition="left"content={problem.price}></List.Item>
+                                <List.Item icon="wrench" as="h1" content={problem.mechanic_username ? problem.mechanic_username : "not claimed yet"}></List.Item>
+                            </List>
+                        </Segment>
+                    </Modal>
+                    
+                </List.Item>
+                </Segment>
+        })
+        return items
+    }
     handleEditSubmit = async(e) => {
         this.setState({
             loading: true
@@ -65,8 +117,9 @@ class ShowMechanic extends React.Component {
             loading: false
         })
     }      
-    componentDidMount = (e) => {
-        this.getMechanicData();
+    componentDidMount = async(e) => {
+        await this.getMechanicData();
+        await this.getProblems();
     }
     handleChange = (e) => {
         this.setState({
@@ -80,13 +133,7 @@ class ShowMechanic extends React.Component {
         return (
             <div>
                 {!this.state.loading ? 
-                <Grid
-                    textAlign='center'
-                    style={{ marginTop: '5em', height: '100%'}}
-                    verticalAlign='top'
-                    stackable
-                    >
-                        <Segment>
+                        <Segment style={{'margin': '2%', 'marginTop' :'60px'}}>
                             <Header as="h1"><span style={{"color":"green"}}>Fixify</span> Mechanic profile</Header>
                             <List>
                                     <List.Item icon="wrench" as="h2" content={this.state.username} />
@@ -96,7 +143,7 @@ class ShowMechanic extends React.Component {
                             </List>
 
                             {this.props.loggedIn ? 
-                            <Modal trigger={<Button color="grey" fluid style={buttonStyle}>Edit Profile</Button>}>
+                            <Modal trigger={<Button color="green" style={buttonStyle}>Edit Profile</Button>}>
                                 <Segment>
                                     <Header as="h1">Edit Profile</Header>
                                     <Form size="large" onSubmit={this.handleEditSubmit} required>
@@ -129,8 +176,8 @@ class ShowMechanic extends React.Component {
                             :
                             null}
 
+                        {this.updateRender()}
                         </Segment>
-                    </Grid>  
             :
             <LoadingScreen />
         }
