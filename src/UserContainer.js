@@ -80,6 +80,7 @@ class ShowUser extends React.Component {
         } else {
             console.log('delete problem failed', parsedResponse)
         }
+        this.getProblems()
     }
     updateRender = (e) => {
         const items = this.state.problems.map((problem) => {
@@ -90,7 +91,7 @@ class ShowUser extends React.Component {
                     </Header>
                     <span style={{'color':'green'}}>Vehicle:</span> {problem.car}
                     <Modal trigger={<Button style={{'position': 'relative', 'float': 'right', 'top': '-25px'}}size="medium" color="green">View</Button>}>
-                        <Segment>
+                        <Segment style={{'padding-bottom': '50px'}}>
                             <Header as="h1">{problem.title}</Header>
                             <Header as="h3">{problem.car}</Header>
                             <List>
@@ -99,6 +100,9 @@ class ShowUser extends React.Component {
                                 <List.Item style={{'float': 'right'}} icon="money" as="h1" iconPosition="left"content={problem.price}></List.Item>
                                 <List.Item icon="wrench" as="h1" content={problem.mechanic_username ? problem.mechanic_username : "not claimed yet"}></List.Item>
                             </List>
+                            <Button style={{'float':'right'}} color="red" onClick={()=> {this.deleteProblem(problem.id)}}>
+                                Pay
+                            </Button>
                         </Segment>
                     </Modal>
                     
@@ -183,7 +187,7 @@ class ShowUser extends React.Component {
         return (
             <div>
                 {!this.state.loading ? 
-                        <Segment style={{'margin': '50px'}}>
+                        <Segment style={{'margin': '2%', 'marginTop': '50px'}}>
                                 <Header as="h1"><span style={{"color":"green"}}>Fixify</span> User profile</Header>
                                 <List>
                                         <List.Item icon="user" as="h2" content={this.state.username} />
@@ -274,7 +278,7 @@ class ShowUser extends React.Component {
             :
             <LoadingScreen />
         }
-        <Segment style={{'margin': '50px'}}>
+        <Segment style={{'margin': '2%'}}>
             <Header as="h1"><span style={{"color":"green"}}>Problems</span></Header>
             <List>
             { this.updateRender()}

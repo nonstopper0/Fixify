@@ -17,6 +17,7 @@ class App extends React.Component {
       logged: false,
       // logged user username
       loggedID: 0,
+      username: ''
     }
   }
   loginfunc = async(data) => {
@@ -33,7 +34,8 @@ class App extends React.Component {
         logged: true,
         // loggedUsername: n,
         user: isUser,
-        loggedID: id
+        loggedID: id,
+        username: data['username']
     })
   } 
 
@@ -64,7 +66,7 @@ class App extends React.Component {
           {this.state.logged && !this.state.user ? <MechanicHeader user={this.state.loggedUser} id={this.state.loggedID} logout={this.logoutFunc}></MechanicHeader> : null }
           <Switch> 
             <Route exact path="/" render={(props) => <LogRegister {...props} logged={this.state.logged} loginfunc={this.loginfunc} idfunc={this.idfunc}/>}></Route>
-            <Route exact path="/problems"></Route>
+            <Route exact path="/problems" render={(props) => <ShowProblem {...props} username={this.state.username}/>}></Route>
             <Route exact path="/user/:id" render={(props => <ShowUser {...props} loggedIn={this.state.logged} id={this.state.loggedID}></ShowUser>)}></Route>
             <Route exact path="/mechanic/:id" render={(props => <ShowMechanic {...props} loggedIn={this.state.logged} id={this.state.loggedID}></ShowMechanic>)}></Route>
           </Switch>
