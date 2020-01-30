@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Row} from 'semantic-ui-react'
+import {Grid, Row, Header, List, Segment, Form, Icon, Modal, Button, TextArea, Text} from 'semantic-ui-react';
 
 class ShowProblem extends React.Component {
     constructor() {
@@ -105,24 +105,24 @@ render() {
                 <Modal trigger={<Button color="green"  style={buttonStyle}>Create Problem</Button>}>
                     <Segment>
                         <Header as="h1">Create a <span style={{"color":"green"}}>Problem</span></Header>
-                            <Form size="large" onSubmit={this.handleProblemSubmit} required>
+                            <Form size="large" onSubmit={this.handleProblemSubmit}      required>
                             <Form.Input 
-                            label="Problem"
-                            icon="wrench"
-                            iconPosition="left"
-                            placeholder="Suspension Problem, Break repair, Bumper repair"
-                            value={this.state.title}
-                            onChange={this.handleChange}
-                            name="title"
+                                label="Problem"
+                                icon="wrench"
+                                iconPosition="left"
+                                placeholder="Suspension Problem, Break repair, Bumper   repair"
+                                value={this.state.title}
+                                onChange={this.handleChange}
+                                name="title"
                             />
                             <Form.Field
-                            control={TextArea}
-                            label="Description" 
-                            placeholder="My front left suspension is in need ofrepair"
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                            name="description"
-                            style={{'height': '100px'}}
+                                control={TextArea}
+                                label="Description" 
+                                placeholder="My front left suspension is in need    ofrepair"
+                                value={this.state.description}
+                                onChange={this.handleChange}
+                                name="description"
+                                style={{'height': '100px'}}
                             /> 
                         <Form.Input
                             label="Vehicle" 
