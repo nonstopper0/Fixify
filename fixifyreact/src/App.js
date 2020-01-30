@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import UserHeader from './UserHeader';
 import LogRegister from './LogRegister.js'
-import ShowUser from './ShowUser.js'
 import ShowProblem from './ShowProblem.js'
+import ShowUser from './UserContainer.js';
 import MechanicHeader from './MechanicHeader.js';
 import ShowMechanic from './ShowMechanic.js';
 
@@ -55,6 +55,7 @@ class App extends React.Component {
     }
     this.props.history.push('/')
   }
+
   render(){
     return (
       <React.Fragment>
