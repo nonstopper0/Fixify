@@ -104,8 +104,7 @@ class ShowUser extends React.Component {
                             <Button style={{'float':'right'}} color="red" onClick={()=> {this.deleteProblem(problem.id)}}>
                                 Pay
                             </Button>
-                            : 
-                            null }
+                            : null }
                         </Segment>
                     </Modal>
                     
