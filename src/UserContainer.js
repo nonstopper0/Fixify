@@ -100,9 +100,11 @@ class ShowUser extends React.Component {
                                 <List.Item style={{'float': 'right'}} icon="money" as="h1" iconPosition="left"content={problem.price}></List.Item>
                                 <List.Item icon="wrench" as="h1" content={problem.mechanic_username ? problem.mechanic_username : "not claimed yet"}></List.Item>
                             </List>
+                            { problem.mechanic_username ? 
                             <Button style={{'float':'right'}} color="red" onClick={()=> {this.deleteProblem(problem.id)}}>
                                 Pay
                             </Button>
+                            : null }
                         </Segment>
                     </Modal>
                     
